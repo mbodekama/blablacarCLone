@@ -73,6 +73,34 @@ loader +=loader;
               hideSideBar()
             $("#conteneur").load('/lAprenant');  
       })
+
+    //Liste des apprenants
+      $('#addForm').click(function()
+      {
+            $("#conteneur").html(loader);
+              hideSideBar()
+            $("#conteneur").load('/addForm');  
+      })
+
+    //Liste des apprenants
+      $('#addMod').click(function()
+      {
+            $("#conteneur").html(loader);
+              hideSideBar()
+            $("#conteneur").load('/addMod');  
+      })
+
+    //Liste des apprenants
+      $('#addTp').click(function()
+      {
+            $("#conteneur").html(loader);
+              hideSideBar()
+            $("#conteneur").load('/addTp');  
+      })
+
+
+
+
       function hideSideBar() {
         if(screen.width < 1000)
         {

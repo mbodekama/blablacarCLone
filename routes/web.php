@@ -91,6 +91,27 @@ Route::get('/home', 'HomeController@index')->name('home');
      //Contenue du tabeau
      Route::get('mytable','AdminController@mytable')->name('mytable');
 
+     //Add formation
+     Route::get('addForm','AdminController@addForm')->name('addForm');
+
+     //Save formation
+     Route::post('saveForm','AdminController@saveForm')->name('saveForm');
+
+
+     //Add Module
+     Route::get('addMod','AdminController@addMod')->name('addMod');
+
+     //Save Module
+     Route::post('saveMod','AdminController@saveMod')->name('saveMod');
+
+     //Add ressources 
+     Route::post('saveRessource','AdminController@saveRessource')->name('saveRessource');
+     
+     
+
+     //Add tp
+     Route::get('addTp','AdminController@addTp')->name('addTp');
+
 
 
 

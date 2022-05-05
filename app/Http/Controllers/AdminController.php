@@ -7,8 +7,10 @@ use App\Mail\ApprenantMail;
 use Illuminate\Http\Request;
 use App\Model\formation;
 use App\User;
+use App\Model\module;
 
 use App\Model\tp_apprenants;
+use App\Model\ressource_module;
 
 use Auth;
 use Mail;
@@ -73,48 +75,166 @@ class AdminController extends Controller
 
     }
 
+           //SAve formation
+        public function saveForm(Request $request)
+        {
+          //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!! 
+              $lien =env('FILE_UPLOADED_LINK');
+          //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!!!! 
+
+
+           //recuperation image1
+           if(!empty($request->file('dossier')))
+
+           {
+
+            $img1 = $request->file('dossier');  // Récupération du name file  
+
+            $path = $img1->store('imgFormation','public'); // dossier de stockage
+
+            $lien_exercice = $lien.$path;  // Chemin d'accès de l'image 
+            // resize_img($img1P,$img1P); //Fonction de redimensionnement 
+
+           }
+           else{
+
+            $lien_exercice ="ND";
+
+                return redirect('/uploadFail');
+
+           }
+
+            $form = [
+                'image' => $lien_exercice,
+                'lien' => $lien_exercice,
+                'libelle'     =>$request->libelle,
+                'description'   =>$request->description,
+                'date'   =>$request->date,
+                ];
+
+
+            formation::create($form);
+
+            return redirect('/home');
+        }
+
+
+
+        //Add formation 
+        public function addForm(Request $request)
+        {
+            return view('pages/back/Admin/addForm');
+        }
+
+
+
     //Upload d'exercie 
         public function uploadExo(Request $request)
         {
 
 
-      //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!! 
-          $lien =env('FILE_UPLOADED_LINK');
-      //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!!!! 
+          //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!! 
+              $lien =env('FILE_UPLOADED_LINK');
+          //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!!!! 
 
 
-       //recuperation image1
-       if(!empty($request->file('dossier')))
+           //recuperation image1
+           if(!empty($request->file('dossier')))
 
-       {
+           {
 
-        $img1 = $request->file('dossier');  // Récupération du name file  
+            $img1 = $request->file('dossier');  // Récupération du name file  
 
-        $path = $img1->store('tpApprenant','public'); // dossier de stockage
+            $path = $img1->store('tpApprenant','public'); // dossier de stockage
 
-        $lien_exercice = $lien.$path;  // Chemin d'accès de l'image 
-        // resize_img($img1P,$img1P); //Fonction de redimensionnement 
+            $lien_exercice = $lien.$path;  // Chemin d'accès de l'image 
+            // resize_img($img1P,$img1P); //Fonction de redimensionnement 
 
-       }
+           }
 
-       else{
+           else{
 
-        $lien_exercice ="ND";
+            $lien_exercice ="ND";
 
-            return redirect('/uploadFail');
+                return redirect('/uploadFail');
 
-       }
-            $exo = [
-                'lien_tp' => $lien_exercice,
-                'date_depot' => date('d/m/Y'),
-                'tp_id'     =>$request->exercice,
-                'user_id'   =>Auth::id(),
-                ];
+           }
+                $exo = [
+                    'lien_tp' => $lien_exercice,
+                    'date_depot' => date('d/m/Y'),
+                    'tp_id'     =>$request->exercice,
+                    'user_id'   =>Auth::id(),
+                    ];
 
-            tp_apprenants::create($exo);
+                tp_apprenants::create($exo);
 
-            return redirect('/uploadOk');
+                return redirect('/uploadOk');
         }
 
+
+        //Add Module
+        public function addMod()
+        {
+            $formations = formation::all();
+            return view('pages/back/Admin/addMod')->with('formations',$formations);
+        }
+
+        //SAve MODULES
+        public function saveMod(Request $request)
+        {
+            $mod = [
+                    'libelle_module' => $request->libelle_module,
+                    'formations_id' => $request->formations_id,
+                    'date' => $request->date,
+                    'status' => $request->status];
+            module::create($mod);
+
+
+        }
+
+    //Save ressourcs 
+        public function saveRessource(Request $request)
+        {
+
+
+          //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!! 
+              $lien =env('FILE_UPLOADED_LINK');
+          //  !!!!!!!!!!!!!!!!  Lien des image  !!!!!!!!!!!!!!!!!! 
+
+
+           //recuperation image1
+           if(!empty($request->file('image_illustration')))
+
+           {
+
+            $img1 = $request->file('image_illustration');  // Récupération du name file  
+
+            $path = $img1->store('ressourceModules','public'); // dossier de stockage
+
+            $lien_exercice = $lien.$path;  // Chemin d'accès de l'image 
+            // resize_img($img1P,$img1P); //Fonction de redimensionnement 
+
+           }
+
+           else{
+
+            $lien_exercice ="ND";
+
+                return redirect('/uploadFail');
+
+           }
+                $res = [
+                        'libelle' =>$request->libelle,
+                        'description' =>$lien_exercice,
+                        'lien'  =>$request->lien,
+                        'nbr_telechargement' =>2,
+                        'image_illustration' =>$lien_exercice,
+                        'date'  =>$request->date,
+                        'module_id'  =>$request->module_id];
+
+                ressource_module::create($res);
+
+                return redirect('/home');
+        }
 
 }
