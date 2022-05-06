@@ -10,6 +10,7 @@ use App\User;
 use App\Model\module;
 
 use App\Model\tp_apprenants;
+use App\Model\tp_module;
 use App\Model\ressource_module;
 
 use Auth;
@@ -235,6 +236,29 @@ class AdminController extends Controller
                 ressource_module::create($res);
 
                 return redirect('/home');
+        }
+
+
+        //ADd tp
+
+        public function addTp()
+        {
+            $formations = formation::all();
+            return view('pages/back/Admin/addTp')->with('formations',$formations);
+        }
+
+        //Save My TP 
+        public function saveTp(Request $request)
+        {
+            $row = ['module_id' =>$request->module_id,
+                    'libelle_tp' =>$request->libelle_tp,
+                    'description_tp' =>$request->description_tp,
+                    'date_tp' =>$request->date_tp,
+                    'date_fin' =>$request->date_fin,
+                    'status' =>1];
+
+            tp_module::create($row);
+            return response()->json();
         }
 
 }

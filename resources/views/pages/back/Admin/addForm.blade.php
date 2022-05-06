@@ -80,4 +80,3 @@ var firstUpload = new FileUploadWithPreview('myFirstImage')
 
 
 
-

@@ -16,7 +16,7 @@
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="{{ route('home') }}" class="nav-link"> MAAT ACADEMY </a>
+                    <a href="{{ route('home') }}" class="nav-link"> STAGE SUA CI </a>
                 </li>
             </ul>
 

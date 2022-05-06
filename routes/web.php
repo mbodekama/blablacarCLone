@@ -106,11 +106,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 
      //Add ressources 
      Route::post('saveRessource','AdminController@saveRessource')->name('saveRessource');
-     
+
      
 
      //Add tp
      Route::get('addTp','AdminController@addTp')->name('addTp');
+
+
+     //Save my Tp
+     Route::post('/saveTp','AdminController@saveTp')->name('saveTp');
 
 
 
