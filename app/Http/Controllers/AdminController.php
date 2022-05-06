@@ -252,7 +252,7 @@ class AdminController extends Controller
         {
             $row = ['module_id' =>$request->module_id,
                     'libelle_tp' =>$request->libelle_tp,
-                    'description_tp' =>$request->description_tp,
+                    // 'description_tp' =>$request->description_tp,
                     'date_tp' =>$request->date_tp,
                     'date_fin' =>$request->date_fin,
                     'status' =>1];
